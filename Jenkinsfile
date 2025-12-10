@@ -1,3 +1,4 @@
+
 pipeline {
   agent any
 
@@ -7,13 +8,6 @@ pipeline {
   }
 
   stages {
-    stage('Checkout') {
-      steps {
-        checkout([$class: 'GitSCM',
-          branches: [[name: '*/main']],
-          userRemoteConfigs: [[url: 'https://github.com/AnjaliMishra1st/self-hosted-devops-lab.git']]])
-      }
-    }
 
     stage('Build Docker image') {
       steps {
@@ -22,12 +16,11 @@ pipeline {
       }
     }
 
+    // Disable kind deploy for now — we enable after image build success
     stage('Deploy to k8s (kind/local)') {
+      when { expression { false } }  // temporarily skip this stage
       steps {
-        echo "Loading image into kind and deploying"
-        sh "kind load docker-image ${env.IMAGE_NAME}:${env.IMAGE_TAG} --name flask-devops-lab || true"
-        sh "kubectl apply -f k8s/"
-        sh "kubectl rollout status deployment/flask-devops-lab --timeout=120s"
+        echo "Skipping deploy until Docker build works"
       }
     }
   }
