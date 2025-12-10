@@ -1,0 +1,15 @@
+services:
+  - name: auth-service
+    status: healthy
+    version: "1.4.2"
+    description: "Handles user authentication and sessions"
+
+  - name: billing-service
+    status: degraded
+    version: "2.1.0"
+    description: "Manages payments and invoices"
+
+  - name: notifications-service
+    status: down
+    version: "3.0.1"
+    description: "Provides email & push notifications to users"

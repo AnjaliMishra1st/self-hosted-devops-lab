@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-devops-lab
+  labels:
+    app: flask-devops-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-devops-lab
+  template:
+    metadata:
+      labels:
+        app: flask-devops-lab
+    spec:
+      serviceAccountName: flask-dashboard-sa
+      containers:
+        - name: flask-devops-lab
+          image: flask-devops-lab:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: STATUS_YAML
+              value: "/app/status.yml"

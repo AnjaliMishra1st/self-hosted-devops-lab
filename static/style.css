@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f4f7;
+    color: #222;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+.card {
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border-left: 5px solid #666;
+}
+
+.pod-running { background: #e7ffee; border-color: #28a745; }
+.pod-pending { background: #fffbe6; border-color: #ffcc00; }
+.pod-failed, .pod-crashloopbackoff { background: #ffe7e7; border-color: #dc3545; }
+
+.service-healthy { background: #e7ffee; border-color: #28a745; }
+.service-degraded { background: #fffbe6; border-color: #ff9900; }
+.service-down { background: #ffe7e7; border-color: #dc3545; }
+
+.insight.info { background: #e6f2ff; padding: 10px; margin-bottom: 10px; border-left: 5px solid #007bff; }
+.insight.warning { background: #fff7e6; padding: 10px; margin-bottom: 10px; border-left: 5px solid #ff9900; }
+.insight.error { background: #ffe6e6; padding: 10px; margin-bottom: 10px; border-left: 5px solid #dc3545; }

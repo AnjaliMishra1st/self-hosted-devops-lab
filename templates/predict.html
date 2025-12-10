@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AI Grade Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+<div class="container">
+    <h1>🎓 AI Student Grade Predictor</h1>
+    <p>Enter your study details to get an AI-based performance prediction.</p>
+
+    <form id="predictForm">
+        <label>Study Hours/Day:
+            <input type="number" step="0.1" name="study_hours" value="4">
+        </label><br>
+
+        <label>Assignments Completed (0-10):
+            <input type="number" name="assignments" value="7">
+        </label><br>
+
+        <label>Attendance (%):
+            <input type="number" name="attendance" value="85">
+        </label><br><br>
+
+        <button type="submit">Predict Grade</button>
+    </form>
+
+    <h3 id="result"></h3>
+</div>
+
+<script>
+document.getElementById("predictForm").onsubmit = async function(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    const res = await fetch("/predict", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+
+    document.getElementById("result").innerText =
+        `Predicted Grade: ${data.predicted_grade}%\nAdvice: ${data.advice.join("; ")}`;
+};
+</script>
+
+</body>
+</html>

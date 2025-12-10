@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Kubernetes Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script>
+        async function refreshDashboard() {
+            try {
+                const res = await fetch('/api/dashboard');
+                const data = await res.json();
+
+                document.getElementById("timestamp").innerText =
+                    new Date(data.timestamp * 1000).toLocaleString();
+
+                // YAML Services
+                const svcBox = document.getElementById("services");
+                svcBox.innerHTML = "";
+                (data.yaml.services || []).forEach(s => {
+                    svcBox.innerHTML += `
+                        <div class="card service-${s.status}">
+                            <strong>${s.name}</strong> — ${s.status}
+                            <br><small>Version: ${s.version}</small>
+                            <br><small>${s.description}</small>
+                        </div>
+                    `;
+                });
+
+                // Kubernetes Pods
+                const podBox = document.getElementById("pods");
+                podBox.innerHTML = "";
+                (data.pods || []).forEach(p => {
+                    podBox.innerHTML += `
+                        <div class="card pod-${p.phase.toLowerCase()}">
+                            <strong>${p.name}</strong>
+                            <br><small>Namespace: ${p.namespace}</small>
+                            <br>Status: ${p.phase}
+                            <br>Restarts: ${p.restarts}
+                        </div>
+                    `;
+                });
+
+                // AI Insights
+                const insightBox = document.getElementById("insights");
+                insightBox.innerHTML = "";
+                (data.insights || []).forEach(i => {
+                    insightBox.innerHTML += `
+                        <div class="insight ${i.level}">
+                            <strong>${i.level.toUpperCase()}:</strong> ${i.message}
+                        </div>
+                    `;
+                });
+
+            } catch (err) {
+                console.error("Dashboard error:", err);
+            }
+        }
+
+        setInterval(refreshDashboard, 8000);  // refresh every 8 seconds
+        window.onload = refreshDashboard;
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <h1>📊 Kubernetes Real-Time Dashboard</h1>
+
+    <p>Last updated: <span id="timestamp">Loading...</span></p>
+
+    <h2>🧠 AI Insights</h2>
+    <div id="insights"></div>
+
+    <h2>📁 YAML Services</h2>
+    <div id="services"></div>
+</html>
+    <br><a href="/">⬅ Back to Home</a>
+</body>
+</div>
+
+    <div id="pods"></div>
+
