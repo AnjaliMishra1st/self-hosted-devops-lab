@@ -79,15 +79,25 @@ Runs lint, build, or test workflows in cloud.
 📁 Repository Structure
 ---
 ├── app.py
+
 ├── Dockerfile
+
 ├── Jenkinsfile
+
 ├── requirements.txt
+
 ├── k8s/
+
 │   ├── deployment.yaml
+
 │   ├── service.yaml
+
 │   └── rbac.yaml
+
 ├── static/
+
 ├── templates/
+
 └── .github/workflows/ci.yml
 
 ---
@@ -160,7 +170,7 @@ Jenkins auto-detects Jenkinsfile.
 
 ✔ Recruiters love end-to-end pipelines
 
-✔ Shows understanding of Docker, Kubernetes, GitHub Actions, and Jenkins
+✔ Shows understanding of Git, Docker, Kubernetes, GitHub Actions, and Jenkins
 
 ---
 
