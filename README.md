@@ -79,25 +79,15 @@ Runs lint, build, or test workflows in cloud.
 📁 Repository Structure
 ---
 ├── app.py
-
 ├── Dockerfile
-
 ├── Jenkinsfile
-
 ├── requirements.txt
-
 ├── k8s/
-
 │   ├── deployment.yaml
-
 │   ├── service.yaml
-
 │   └── rbac.yaml
-
 ├── static/
-
 ├── templates/
-
 └── .github/workflows/ci.yml
 
 ---
