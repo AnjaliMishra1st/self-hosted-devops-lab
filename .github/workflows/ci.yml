@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -20,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r backend/requirements.txt
 
       - name: Run tests
         run: |
@@ -30,10 +29,15 @@ jobs:
         run: |
           docker build -t flask-devops-lab:latest .
 
+      - name: Set lowercase repo name
+        run: echo "REPO_LC=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Login to GitHub Container Registry
+        if: github.event_name == 'push'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Tag and Push image to GHCR
+        if: github.event_name == 'push'
         run: |
-          docker tag flask-devops-lab:latest ghcr.io/${{ github.repository }}/flask-devops-lab:latest
-          docker push ghcr.io/${{ github.repository }}/flask-devops-lab:latest
+          docker tag flask-devops-lab:latest ghcr.io/${{ env.REPO_LC }}/flask-devops-lab:latest
+          docker push ghcr.io/${{ env.REPO_LC }}/flask-devops-lab:latest
