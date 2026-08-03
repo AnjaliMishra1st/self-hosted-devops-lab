@@ -10,7 +10,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y build-essential gcc --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
+COPY backend/requirements.txt ./requirements.txt
 
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -25,8 +25,8 @@ WORKDIR /app
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
 
-# Copy application folder (contains app.py, templates, static)
-COPY core/ ./core/
+# Copy backend application folder
+COPY backend/ ./backend/
 
 # Copy status file if used by app
 COPY status.yml ./status.yml
@@ -34,5 +34,5 @@ COPY status.yml ./status.yml
 EXPOSE 5000
 
 # Run Flask app using Gunicorn
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "core.app:app", "--workers", "3", "--threads", "4", "--timeout", "120"]
-
+WORKDIR /app/backend
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app", "--workers", "3", "--threads", "4", "--timeout", "120"]
