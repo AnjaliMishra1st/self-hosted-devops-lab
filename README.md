@@ -1,3 +1,5 @@
+![CI - Build & Test](https://github.com/AnjaliMishra1st/self-hosted-devops-lab/actions/workflows/ci.yml/badge.svg)
+
 🚀 Project Overview
 ---
 This project is a self-hosted, offline DevOps lab created to simulate real-world CI/CD workflows without relying on cloud platforms like AWS or GCP.
